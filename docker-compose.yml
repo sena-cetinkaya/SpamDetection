@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: spamdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "${PORT}:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./app/models:/app/app/models
+
+  seed:
+    build: .
+    depends_on:
+      - db
+    entrypoint: ["python", "app/services/train_model.py"]
+    env_file:
+      - .env
+
+volumes:
+  db_data:

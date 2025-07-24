@@ -20,7 +20,6 @@ def prepare_data_from_csv():
     df = df[df["Classification"].isin(["spam", "ham"])]  # spam ve ham olan sınıflar filtrelenir. içteki df true-false döner, dıştaki df trueları alır
     df = df[["Text", "Classification"]].copy()
     df["label"] = df["Classification"].map({"spam": 1, "ham": 0})
-    #df.rename(columns={"Text": "content", "Classification": "classification"}, inplace=True)
     df.rename(columns={"Text": "content"}, inplace=True)
     return df.to_dict(orient="records")
 

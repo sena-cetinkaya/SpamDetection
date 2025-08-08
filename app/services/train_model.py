@@ -17,7 +17,7 @@ MODEL_PATH = "app/models/spam_model.pkl"
 def prepare_data_from_csv():
     df = pd.read_csv("data/tr_email_spam.csv")
     df = df.dropna()
-    df = df[df["Classification"].isin(["spam", "ham"])]  # spam ve ham olan sınıflar filtrelenir. içteki df true-false döner, dıştaki df trueları alır
+    df = df[df["Classification"].isin(["spam", "ham"])]  
     df = df[["Text", "Classification"]].copy()
     df["label"] = df["Classification"].map({"spam": 1, "ham": 0})
     df.rename(columns={"Text": "content"}, inplace=True)
@@ -60,3 +60,4 @@ if not os.path.exists(MODEL_PATH):
     print(f"Model saved: {MODEL_PATH}, Accuracy: {best_score:.4f}")
 else:
     print("Model already exists.")
+
